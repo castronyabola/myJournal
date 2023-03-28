@@ -17,7 +17,7 @@
         android:paddingBottom="10dp"
         android:text="Example"
         android:background="@drawable/rounded_background"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
         android:textStyle="bold"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvTime"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDateEntries"
         app:layout_constraintEnd_toStartOf="@+id/tvDateEntries"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMonthEntries" />
@@ -85,9 +85,10 @@
         android:layout_height="wrap_content"
         android:text="Time"
         android:textSize="12sp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toTopOf="@+id/cvMood"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDateEntries" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMood"

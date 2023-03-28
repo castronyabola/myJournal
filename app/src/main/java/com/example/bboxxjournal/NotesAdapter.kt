@@ -55,7 +55,6 @@ class NotesAdapter(
         holder.itemView.apply {
             tvNotes.text = curNote.title
             val dateTime = LocalDateTime.parse(curNote.time, dateTimeFormatter)
-            //tvDate.text = "%s, %s".format(dateTime.toLocalDate().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }, dateTime.toLocalDate().dayOfMonth.toString())//"${dateTime.toLocalDate().dayOfWeek.toString()},  ${dateTime.toLocalDate().dayOfMonth.toString()}"
             tvTime.text = dateTime.format(timeFormatter)
             cvMood.setCardBackgroundColor(curNote.mood)
         }
@@ -117,20 +116,18 @@ class NotesAdapter(
 
             val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
             val dateTime = LocalDateTime.parse(curNote.time, dateTimeFormatter)
+            println("#######: $notes")
             val filteredNotesGreen = notes.filter {
                     note ->
-                note.mood.toString().contains("-16711936")
+                note.mood.toString().contains("-3080514")
             }
-
-            //println("##############: $notes")
-
             val filteredNotesYellow = notes.filter {
                     note ->
-                note.mood.toString().contains("-256") //== ColorStateList.valueOf(Color.YELLOW)
+                note.mood.toString().contains("-66626")
             }
             val filteredNotesRed = notes.filter {
                     note ->
-                note.mood.toString().contains("-65536")
+                note.mood.toString().contains("-32397")
             }
             val filteredNotes = notes.filter {
                     note ->
@@ -147,13 +144,13 @@ class NotesAdapter(
                 val redPercentage = redCount.toFloat() / totalCount
 
                 val color = when {
-                    greenPercentage > 0.5 -> Color.GREEN
-                    redPercentage > 0.5 -> Color.RED
-                    yellowPercentage > 0.5 -> Color.YELLOW
-                    redPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.YELLOW
-                    yellowPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.parseColor("#CEFF33")
-                    redPercentage.toDouble() == 0.5 && yellowPercentage.toDouble() == 0.5 -> Color.parseColor("#FFA533")
-                    else -> Color.YELLOW
+                    greenPercentage > 0.5 -> Color.parseColor("#D0FEBE")
+                    redPercentage > 0.5 -> Color.parseColor("#FF8173")
+                    yellowPercentage > 0.5 -> Color.parseColor("#FEFBBE")
+                    redPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.parseColor("#FEFBBE")
+                    yellowPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.parseColor("#F7FF96")
+                    redPercentage.toDouble() == 0.5 && yellowPercentage.toDouble() == 0.5 -> Color.parseColor("#FFE496")
+                    else -> Color.parseColor("#E4E800")
                 }
 
 
@@ -165,6 +162,12 @@ class NotesAdapter(
 
             }
 
+        }else{
+            holder.itemView.apply {
+                tvMonth.visibility = View.GONE
+                tvMonthEntries.visibility = View.GONE
+//
+            }
         }
 
         if (prevDate == null || curDate.dayOfMonth != prevDate.dayOfMonth) {
@@ -182,10 +185,8 @@ class NotesAdapter(
             }
         }else{
             holder.itemView.apply {
-                tvDate.text = null
-                tvDate.setBackgroundColor(Color.TRANSPARENT)
-                tvDateEntries.text = null
-                tvDateEntries.setBackgroundColor(Color.TRANSPARENT)
+                  tvDate.visibility = View.GONE
+                  tvDateEntries.visibility = View.GONE
             }
         }
     }

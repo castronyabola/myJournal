@@ -31,9 +31,6 @@ class ActivityAddNotes : AppCompatActivity() {
 
         notesAdapter = NotesAdapter(mutableListOf())
 
-        //rvNoteItems.adapter = notesAdapter
-        //rvNoteItems.layoutManager = LinearLayoutManager(this)
-
         btnAddNote.setOnClickListener {
             val todoTitle = etNotes.text.toString()
             if(todoTitle.isNotEmpty()) {
@@ -49,12 +46,7 @@ class ActivityAddNotes : AppCompatActivity() {
 
                     etNotes.text.clear()
 
-
                     val notesList = notesAdapter.notesList
-
-
-                    println("Here are notes#######: $notesList")
-
 
                     saveNotes(notesList)
 
@@ -65,27 +57,24 @@ class ActivityAddNotes : AppCompatActivity() {
 
 
         btGreen.setOnClickListener {
-            moodValue = ColorStateList.valueOf(Color.GREEN)
+            moodValue = ColorStateList.valueOf(Color.parseColor("#D0FEBE"))
             etNotes.visibility = View.VISIBLE
             tvQuest.text = "You Selected Happy, Meaning You're Happy!, Great!"
-            tvQuest.setTextColor(Color.parseColor("#339933"))
-            //btGreen.isEnabled = false
+            tvQuest.setTextColor(Color.parseColor("#59C704"))
         }
 
         btYellow.setOnClickListener {
-            moodValue = ColorStateList.valueOf(Color.YELLOW)
+            moodValue = ColorStateList.valueOf(Color.parseColor("#FEFBBE"))
             etNotes.visibility = View.VISIBLE
             tvQuest.text = "You Selected Normal, Not Bad."
-            tvQuest.setTextColor(Color.parseColor("#FF9900"))
-            //btYellow.isEnabled = false
+            tvQuest.setTextColor(Color.parseColor("#E8C800"))
 
         }
         btRed.setOnClickListener {
-            moodValue = ColorStateList.valueOf(Color.RED)
+            moodValue = ColorStateList.valueOf(Color.parseColor("#FF8173"))
             etNotes.visibility = View.VISIBLE
             tvQuest.text = "You Selected Angry, Whats Up? Try and calm down buddy."
-            tvQuest.setTextColor(Color.RED)
-        //btRed.isEnabled = false
+            tvQuest.setTextColor(Color.parseColor("#FF8173"))
 
         }
     }

@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadNotes(): MutableList<Notes> {
+
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
 
         val notesList = mutableListOf<Notes>()
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             sortedNotesList = notesList.sortedByDescending { LocalDateTime.parse(it.time, dateFormatter) }.toMutableList()
 
         }
+        progressBar.visibility = View.GONE
         return sortedNotesList
 
     }
