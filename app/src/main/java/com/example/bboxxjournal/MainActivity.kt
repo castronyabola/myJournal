@@ -43,15 +43,26 @@ class MainActivity : AppCompatActivity() {
 
         fabDel.setOnClickListener {
 
-            if(cbDelete.isChecked) {
+            val filteredList = notesAdapter.notesList.filter {
+                    note ->
+                note.isChecked
+            }
+
+            if(filteredList.isNotEmpty()) {
+                tvNonSelected.visibility = View.GONE
                 notesAdapter.deleteNotes()
 
                 saveNotes()
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+
+            }else{
+                tvNonSelected.visibility = View.VISIBLE
+                tvEmptyList.visibility = View.GONE
             }
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

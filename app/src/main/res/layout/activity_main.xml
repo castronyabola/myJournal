@@ -67,11 +67,31 @@
 
     <TextView
         android:id="@+id/tvEmptyList"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:text="You have not added any notes yet. Please tap the button below to add notes. Thank you."
+        android:text="You have not added any notes yet. Please tap the button on the bottom right to add notes. Thank you."
         android:textAlignment="center"
         android:visibility="visible"
+        android:background="@color/red"
+        android:textColor="@color/yellow"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvNonSelected"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:text="You have not selected any item to delete. Please select one before clicking the delete button. Thank you."
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:background="@color/red"
+        android:textColor="@color/yellow"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
