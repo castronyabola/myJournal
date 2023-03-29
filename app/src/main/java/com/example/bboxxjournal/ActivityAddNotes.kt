@@ -60,22 +60,28 @@ class ActivityAddNotes : AppCompatActivity() {
 
 
         btGreen.setOnClickListener {
+            tvPrompt.visibility = View.GONE
             moodValue = ColorStateList.valueOf(Color.parseColor("#D0FEBE"))
             etNotes.visibility = View.VISIBLE
+            etNotes.setBackgroundColor(Color.parseColor("#D0FEBE"))
             tvQuest.text = "You Selected Happy, Meaning You're Happy!, Great!"
             tvQuest.setTextColor(Color.parseColor("#59C704"))
         }
 
         btYellow.setOnClickListener {
+            tvPrompt.visibility = View.GONE
             moodValue = ColorStateList.valueOf(Color.parseColor("#FEFBBE"))
             etNotes.visibility = View.VISIBLE
+            etNotes.setBackgroundColor(Color.parseColor("#FEFBBE"))
             tvQuest.text = "You Selected Normal, Not Bad."
             tvQuest.setTextColor(Color.parseColor("#E8C800"))
 
         }
         btRed.setOnClickListener {
+            tvPrompt.visibility = View.GONE
             moodValue = ColorStateList.valueOf(Color.parseColor("#FF8173"))
             etNotes.visibility = View.VISIBLE
+            etNotes.setBackgroundColor(Color.parseColor("#FF8173"))
             tvQuest.text = "You Selected Angry, Whats Up? Try and calm down buddy."
             tvQuest.setTextColor(Color.parseColor("#FF8173"))
 
