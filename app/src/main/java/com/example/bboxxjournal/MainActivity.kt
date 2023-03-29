@@ -3,19 +3,16 @@ package com.example.bboxxjournal
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_notes.*
 import kotlinx.android.synthetic.main.item_notes.view.*
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -43,12 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         fabDel.setOnClickListener {
 
-            val filteredList = notesAdapter.notesList.filter {
-                    note ->
+            val filteredList = notesAdapter.notesList.filter { note ->
                 note.isChecked
             }
 
-            if(filteredList.isNotEmpty()) {
+            if (filteredList.isNotEmpty()) {
                 tvNonSelected.visibility = View.GONE
                 notesAdapter.deleteNotes()
 
@@ -57,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
 
-            }else{
+            } else {
                 tvNonSelected.visibility = View.VISIBLE
                 tvEmptyList.visibility = View.GONE
             }
@@ -78,12 +74,14 @@ class MainActivity : AppCompatActivity() {
         if (json != null) {
             val notesArray = gson.fromJson(json, Array<Notes>::class.java)
             notesList.addAll(notesArray)
-            sortedNotesList = notesList.sortedByDescending { LocalDateTime.parse(it.time, dateFormatter) }.toMutableList()
+            sortedNotesList =
+                notesList.sortedByDescending { LocalDateTime.parse(it.time, dateFormatter) }
+                    .toMutableList()
 
         }
 
         progressBar.visibility = View.GONE
-        if(sortedNotesList.isNotEmpty()){
+        if (sortedNotesList.isNotEmpty()) {
             tvEmptyList.visibility = View.GONE
         }
         return sortedNotesList

@@ -2,21 +2,21 @@ package com.example.bboxxjournal
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_add_notes.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import android.content.SharedPreferences
-import com.google.gson.reflect.TypeToken
 
 class ActivityAddNotes : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -31,29 +31,29 @@ class ActivityAddNotes : AppCompatActivity() {
 
         notesAdapter = NotesAdapter(mutableListOf())
 
-        etNotes.setOnClickListener{
+        etNotes.setOnClickListener {
             tvPrompt.visibility = View.GONE
         }
 
         btnAddNote.setOnClickListener {
             val todoTitle = etNotes.text.toString()
-            if(todoTitle.isNotEmpty()) {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+            if (todoTitle.isNotEmpty()) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
 
-                    val currentTime = LocalDateTime.now()
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
-                    val formattedTime = currentTime.format(formatter)
-                    val note = Notes(todoTitle, formattedTime, moodValue)
-                    notesAdapter.addNotes(note)
+                val currentTime = LocalDateTime.now()
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
+                val formattedTime = currentTime.format(formatter)
+                val note = Notes(todoTitle, formattedTime, moodValue)
+                notesAdapter.addNotes(note)
 
-                    etNotes.text.clear()
+                etNotes.text.clear()
 
-                    val notesList = notesAdapter.notesList
+                val notesList = notesAdapter.notesList
 
-                    saveNotes(notesList)
+                saveNotes(notesList)
 
-            }else{
+            } else {
                 tvPrompt.visibility = View.VISIBLE
             }
         }
@@ -91,7 +91,9 @@ class ActivityAddNotes : AppCompatActivity() {
     private fun saveNotes(notes: List<Notes>) {
         val gson = Gson()
         val notesJson = sharedPreferences.getString("notes", null)
-        var notesList = gson.fromJson<List<Notes>>(notesJson, object : TypeToken<List<Notes>>() {}.type) ?: mutableListOf()
+        var notesList =
+            gson.fromJson<List<Notes>>(notesJson, object : TypeToken<List<Notes>>() {}.type)
+                ?: mutableListOf()
 
         notesList += notes
 
