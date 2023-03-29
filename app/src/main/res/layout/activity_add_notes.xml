@@ -7,24 +7,38 @@
     android:background="#2593DEFF"
     tools:context=".ActivityAddNotes">
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/etNotes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Write here to add your note..."
-        android:background="@drawable/rounded_background"
-        android:visibility="gone"
-        android:textSize="14sp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/llH"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddNote"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llH" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp">
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/etNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="800dp"
+            android:hint="Write here to add your note..."
+            android:visibility="gone"
+            android:background="@drawable/rounded_background"
+            android:textSize="14sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/btnAddNote"

@@ -31,10 +31,13 @@ class ActivityAddNotes : AppCompatActivity() {
 
         notesAdapter = NotesAdapter(mutableListOf())
 
+        etNotes.setOnClickListener{
+            tvPrompt.visibility = View.GONE
+        }
+
         btnAddNote.setOnClickListener {
             val todoTitle = etNotes.text.toString()
             if(todoTitle.isNotEmpty()) {
-                    tvPrompt.visibility = View.INVISIBLE
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
 
