@@ -3,6 +3,7 @@ package com.example.bboxxjournal
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import android.os.Build
@@ -39,6 +40,18 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityAddNotes::class.java)
             startActivity(intent)
         }
+
+        fabDel.setOnClickListener {
+
+            if(cbDelete.isChecked) {
+                notesAdapter.deleteNotes()
+
+                saveNotes()
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -57,8 +70,26 @@ class MainActivity : AppCompatActivity() {
             sortedNotesList = notesList.sortedByDescending { LocalDateTime.parse(it.time, dateFormatter) }.toMutableList()
 
         }
+
         progressBar.visibility = View.GONE
+        if(sortedNotesList.isNotEmpty()){
+            tvEmptyList.visibility = View.GONE
+        }
         return sortedNotesList
 
+    }
+
+    private fun saveNotes() {
+        val gson = Gson()
+
+        val notesList = notesAdapter.notesList
+
+        val editor = sharedPreferences.edit()
+        val updatedNotesJson = gson.toJson(notesList)
+        editor.putString("notes", updatedNotesJson)
+        editor.apply()
+
+        notesAdapter.notesList = notesList.toList()
+        notesAdapter.notifyDataSetChanged()
     }
 }

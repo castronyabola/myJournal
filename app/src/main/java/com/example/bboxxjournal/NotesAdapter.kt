@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_add_notes.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.item_notes.view.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -38,10 +39,18 @@ class NotesAdapter(
     @RequiresApi(Build.VERSION_CODES.O)
     fun addNotes(note: Notes) {
         notes.add(note)
-        //notes = notes.sortedByDescending { LocalDate.parse(it.time, dateFormatter) }.toMutableList()
         notes.sortBy { LocalDate.parse(it.time, dateFormatter) }
-        notifyDataSetChanged()
+        notifyItemInserted(notes.size - 1)
+        //notifyDataSetChanged()
 
+    }
+
+    fun deleteNotes() {
+        notes.removeAll { note ->
+            note.isChecked
+        }
+        notifyItemRemoved(notes.size - 1)
+        //notifyDataSetChanged()
     }
 
     var notesList: List<Notes> = emptyList()
@@ -57,6 +66,10 @@ class NotesAdapter(
             val dateTime = LocalDateTime.parse(curNote.time, dateTimeFormatter)
             tvTime.text = dateTime.format(timeFormatter)
             cvMood.setCardBackgroundColor(curNote.mood)
+            curNote.isChecked = cbDelete.isChecked
+            cbDelete.setOnCheckedChangeListener { _, _ ->
+                curNote.isChecked = !curNote.isChecked
+            }
         }
     }
 
@@ -81,6 +94,7 @@ class NotesAdapter(
             1 // normal note view
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -116,7 +130,7 @@ class NotesAdapter(
 
             val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH)
             val dateTime = LocalDateTime.parse(curNote.time, dateTimeFormatter)
-            println("#######: $notes")
+            //println("#######: $notes")
             val filteredNotesGreen = notes.filter {
                     note ->
                 note.mood.toString().contains("-3080514")
@@ -131,7 +145,7 @@ class NotesAdapter(
             }
             val filteredNotes = notes.filter {
                     note ->
-                note.time.contains(dateTime.toLocalDate().dayOfMonth.toString())
+                note.time.contains(dateTime.toLocalDate().monthValue.toString())
             }
             holder.itemView.apply {
                 val greenCount = filteredNotesGreen.size // number of green entries
@@ -155,7 +169,12 @@ class NotesAdapter(
 
 
                 tvMonth.text = "%s".format(curDate.month.toString())
-                tvMonthEntries.text = "%s entries".format(filteredNotes.size)
+
+                if (filteredNotes.size == 1) {
+                    tvMonthEntries.text = "%s entry".format(filteredNotes.size)
+                }else{
+                    tvMonthEntries.text = "%s entries".format(filteredNotes.size)
+                }
 
                 tvMonth.setBackgroundColor(color)
                 tvMonthEntries.setBackgroundColor(color)
@@ -166,7 +185,6 @@ class NotesAdapter(
             holder.itemView.apply {
                 tvMonth.visibility = View.GONE
                 tvMonthEntries.visibility = View.GONE
-//
             }
         }
 
@@ -181,7 +199,11 @@ class NotesAdapter(
             }
             holder.itemView.apply {
                 tvDate.text = "%s, %s".format(dateTime.toLocalDate().dayOfWeek.toString().lowercase().replaceFirstChar { it.uppercase() }, dateTime.toLocalDate().dayOfMonth.toString())
-                tvDateEntries.text = "%s entries".format(filteredNotes.size)
+                if (filteredNotes.size == 1) {
+                    tvDateEntries.text = "%s entry".format(filteredNotes.size)
+                }else{
+                    tvDateEntries.text = "%s entries".format(filteredNotes.size)
+                }
             }
         }else{
             holder.itemView.apply {
