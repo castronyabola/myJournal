@@ -73,7 +73,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@color/red"
-        android:text="Please select how you feel and write a short note before adding Note"
+        android:text="Please select how you feel and write a short note before clicking the Add Note Button"
         android:textAlignment="center"
         android:textColor="@color/yellow"
         android:visibility="gone"
