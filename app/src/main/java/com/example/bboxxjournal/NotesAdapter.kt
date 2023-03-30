@@ -155,22 +155,31 @@ class NotesAdapter(
                 val yellowPercentage = yellowCount.toFloat() / totalCount
                 val redPercentage = redCount.toFloat() / totalCount
 
-                val color = when {
-                    greenPercentage > 0.5 -> Color.parseColor("#D0FEBE")
-                    redPercentage > 0.5 -> Color.parseColor("#FF8173")
-                    yellowPercentage > 0.5 -> Color.parseColor("#FEFBBE")
-                    redPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.parseColor(
-                        "#FEFBBE"
-                    )
-                    yellowPercentage.toDouble() == 0.5 && greenPercentage.toDouble() == 0.5 -> Color.parseColor(
-                        "#F7FF96"
-                    )
-                    redPercentage.toDouble() == 0.5 && yellowPercentage.toDouble() == 0.5 -> Color.parseColor(
-                        "#FFE496"
-                    )
-                    else -> Color.parseColor("#E4E800")
+                fun mixColors(
+                    redPercentage: Float, yellowPercentage: Float, greenPercentage: Float
+                ): Int {
+                    val totalPercentage = redPercentage + yellowPercentage + greenPercentage
+                    val red = Color.parseColor("#FF8173")
+                    val yellow = Color.parseColor("#FEFBBE")
+                    val green = Color.parseColor("#D0FEBE")
+
+                    val mixedRed =
+                        (Color.red(red) * redPercentage + Color.red(yellow) * yellowPercentage + Color.red(
+                            green
+                        ) * greenPercentage) / totalPercentage
+                    val mixedGreen =
+                        (Color.green(red) * redPercentage + Color.green(yellow) * yellowPercentage + Color.green(
+                            green
+                        ) * greenPercentage) / totalPercentage
+                    val mixedYellow =
+                        (Color.blue(red) * redPercentage + Color.blue(yellow) * yellowPercentage + Color.blue(
+                            green
+                        ) * greenPercentage) / totalPercentage
+
+                    return Color.rgb(mixedRed.toInt(), mixedGreen.toInt(), mixedYellow.toInt())
                 }
 
+                val mixedColor = mixColors(redPercentage, yellowPercentage, greenPercentage)
 
                 tvMonth.text = "%s".format(curDate.month.toString())
 
@@ -180,8 +189,8 @@ class NotesAdapter(
                     tvMonthEntries.text = "%s entries".format(filteredNotes.size)
                 }
 
-                tvMonth.setBackgroundColor(color)
-                tvMonthEntries.setBackgroundColor(color)
+                tvMonth.setBackgroundColor(mixedColor)
+                tvMonthEntries.setBackgroundColor(mixedColor)
             }
 
         } else {
