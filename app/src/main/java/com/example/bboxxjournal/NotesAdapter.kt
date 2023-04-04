@@ -86,7 +86,7 @@ class NotesAdapter(
             null
         }
 
-        return if (prevDate == null || curDate.month != prevDate.month || curDate.dayOfMonth != prevDate.dayOfMonth) {
+        return if (prevDate == null || curDate.month != prevDate.month) {
             0 // month header view
         } else {
             1 // normal note view
@@ -130,13 +130,28 @@ class NotesAdapter(
         if (prevDate == null || curDate.monthValue != prevDate.monthValue) {
 
             val filteredNotesGreen = notes.filter { note ->
-                note.mood.toString().contains("-3080514")
+                note.mood.toString().contains("-3080514") &&
+                        LocalDate.parse(note.time, dateFormatter).month.getDisplayName(
+                            TextStyle.FULL, Locale.ENGLISH
+                        ).toString().lowercase() == curDate.month.getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH
+                ).toString().lowercase()
             }
             val filteredNotesYellow = notes.filter { note ->
-                note.mood.toString().contains("-66626")
+                note.mood.toString().contains("-66626") &&
+                        LocalDate.parse(note.time, dateFormatter).month.getDisplayName(
+                            TextStyle.FULL, Locale.ENGLISH
+                        ).toString().lowercase() == curDate.month.getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH
+                ).toString().lowercase()
             }
             val filteredNotesRed = notes.filter { note ->
-                note.mood.toString().contains("-32397")
+                note.mood.toString().contains("-32397") &&
+                        LocalDate.parse(note.time, dateFormatter).month.getDisplayName(
+                            TextStyle.FULL, Locale.ENGLISH
+                        ).toString().lowercase() == curDate.month.getDisplayName(
+                    TextStyle.FULL, Locale.ENGLISH
+                ).toString().lowercase()
             }
 
             val filteredNotes = notes.filter { note ->
